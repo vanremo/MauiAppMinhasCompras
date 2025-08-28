@@ -28,22 +28,20 @@ O MauiAppMinhasCompras é um aplicativo desenvolvido em .NET MAUI para gerenciam
 🔄 ObservableCollection para atualização automática da UI
 
 ---------------------------------------------------------------------------------------------------
-📂 Estrutura do projeto
 MauiAppMinhasCompras/
 ├─ Helpers/
-│   └─ SQLITEDatabaseHelpers.cs
+│ └─ SQLITEDatabaseHelpers.cs
 ├─ Models/
-│   └─ Produto.cs
+│ └─ Produto.cs
 ├─ Views/
-│   ├─ EditarProduto/
-│   │   └─ EditarProduto.xaml + EditarProduto.xaml.cs
-│   ├─ ListarProduto/
-│   │   └─ ListarProduto.xaml + ListarProduto.xaml.cs
-│   └─ NovoProduto/
-│       └─ NovoProduto.xaml + NovoProduto.xaml.cs
+│ ├─ EditarProduto/
+│ │ └─ EditarProduto.xaml + EditarProduto.xaml.cs
+│ ├─ ListarProduto/
+│ │ └─ ListarProduto.xaml + ListarProduto.xaml.cs
+│ └─ NovoProduto/
+│ └─ NovoProduto.xaml + NovoProduto.xaml.cs
 ├─ MauiAppMinhasCompras.csproj
 └─ README.md
-
 ------------------------------------------------------------------------------------------
 
 🚀 Como executar
