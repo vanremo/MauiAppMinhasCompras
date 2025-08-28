@@ -3,6 +3,8 @@
 
 O MauiAppMinhasCompras é um aplicativo desenvolvido em .NET MAUI para gerenciamento de produtos, permitindo busca dinâmica e atualização automática da interface usando ObservableCollection. O app inclui funcionalidades de listar, adicionar e editar produtos.
 
+-----------------------------------------------------------------------------------------------------------------------
+
 🎯 Funcionalidades
 
 📋 Listagem de produtos com busca dinâmica em tempo real
@@ -12,6 +14,8 @@ O MauiAppMinhasCompras é um aplicativo desenvolvido em .NET MAUI para gerenciam
 ✏️ Edição de produtos existentes
 
 🔄 Atualização automática da interface usando ObservableCollection
+
+--------------------------------------------------------------------------------
 
 🛠 Tecnologias utilizadas
 
