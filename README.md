@@ -60,6 +60,8 @@ A lista é armazenada em uma ObservableCollection, garantindo atualização auto
 
 O filtro é case-insensitive, tornando a busca mais intuitiva
 
+----------------------------------------------------------------------------------------
+
 💡 Possíveis melhorias
 
 🏷 Adicionar filtros por categoria ou preço, permitindo buscas mais específicas.
