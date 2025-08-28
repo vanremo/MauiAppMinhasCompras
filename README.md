@@ -27,6 +27,7 @@ O MauiAppMinhasCompras é um aplicativo desenvolvido em .NET MAUI para gerenciam
 
 🔄 ObservableCollection para atualização automática da UI
 
+---------------------------------------------------------------------------------------------------
 📂 Estrutura do projeto
 MauiAppMinhasCompras/
 ├─ Helpers/
@@ -43,12 +44,13 @@ MauiAppMinhasCompras/
 ├─ MauiAppMinhasCompras.csproj
 └─ README.md
 
+------------------------------------------------------------------------------------------
+
 🚀 Como executar
 
 Clone o repositório:
 
 git clone https://github.com/seuusuario/MauiAppMinhasCompras.git
-
 
 Abra a solução .sln no Visual Studio
 
@@ -56,6 +58,7 @@ Configure o projeto como startup project
 
 Execute o app em um emulador ou dispositivo físico
 
+------------------------------------------------------------------------------------------
 🔍 Funcionalidade de busca dinâmica
 
 O SearchBar permite filtrar produtos conforme o usuário digita
