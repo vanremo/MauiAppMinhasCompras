@@ -62,8 +62,14 @@ O filtro é case-insensitive, tornando a busca mais intuitiva
 
 💡 Possíveis melhorias
 
-🏷 Adicionar filtros por categoria ou preço
+🏷 Adicionar filtros por categoria ou preço, permitindo buscas mais específicas.
 
-⚡ Substituir ListView por CollectionView para melhor performance
+⚡ Substituir ListView por CollectionView para melhorar a performance e fluidez da interface.
 
-❌ Mostrar mensagem quando nenhum produto for encontrado
+❌ Mostrar mensagem quando nenhum produto for encontrado, oferecendo feedback ao usuário.
+
+✏️ Implementar edição de produtos diretamente na lista, utilizando o menu de contexto já previsto (MenuItem_Clicked).
+
+🗑 Implementar exclusão de produtos com confirmação do usuário antes de remover, completando o ciclo CRUD (Criar, Ler, Atualizar e Deletar).
+
+🎨 Aprimorar a interface visual, tornando o app mais profissional e agradável, com cores consistentes, ícones intuitivos e layout moderno.
