@@ -1,29 +1,63 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MauiAppMinhasCompras.MainPage">
+             x:Class="MauiAppMinhasCompras.MainPage"
+             Title="Minhas Compras">
 
     <ScrollView>
-        <VerticalStackLayout Padding="30,0" Spacing="25">
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-            <Image Source="dotnet_bot.png"
-                   HeightRequest="185"
-                   Aspect="AspectFit"
-                   SemanticProperties.Description="dot net bot in a race car number eight" />
+            <Label Text="Cadastro de Produto"
+                   FontSize="20"
+                   FontAttributes="Bold"
+                   HorizontalOptions="Center"/>
 
-            <Label Text="Hello, World!"
-                   Style="{StaticResource Headline}"
-                   SemanticProperties.HeadingLevel="Level1" />
+            <Entry x:Name="DescricaoEntry" Placeholder="Descrição do produto"/>
+            <Entry x:Name="QuantidadeEntry" Placeholder="Quantidade" Keyboard="Numeric"/>
+            <Entry x:Name="PrecoEntry" Placeholder="Preço" Keyboard="Numeric"/>
 
-            <Label Text="Welcome to &#10;.NET Multi-platform App UI"
-                   Style="{StaticResource SubHeadline}"
-                   SemanticProperties.HeadingLevel="Level2"
-                   SemanticProperties.Description="Welcome to dot net Multi platform App U I" />
+            <Picker x:Name="CategoriaPicker" Title="Selecione a Categoria">
+                <Picker.Items>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
 
-            <Button x:Name="CounterBtn"
-                    Text="Click me"
-                    Clicked="OnCounterClicked"
-                    HorizontalOptions="Fill" />
+            <Button Text="Adicionar Produto" Clicked="OnAdicionarProduto"/>
+
+            <Label Text="Produtos cadastrados" FontSize="18" FontAttributes="Bold" Margin="0,20,0,5"/>
+
+            <CollectionView x:Name="ProdutosCollectionView" HeightRequest="300">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="LightGray" Margin="5" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Descricao}" FontSize="16" />
+                                <Label Text="{Binding Categoria}" FontSize="14" TextColor="Gray"/>
+                                <Label Text="{Binding Total, StringFormat='Total: {0:C}'}" FontAttributes="Bold"/>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Label Text="Filtrar por Categoria" FontSize="16" FontAttributes="Bold" />
+
+            <Picker x:Name="FiltroCategoriaPicker" Title="Selecione a Categoria" SelectedIndexChanged="OnFiltroCategoriaChanged">
+                <Picker.Items>
+                    <x:String>Todos</x:String>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <Button Text="Relatório por Categoria"
+                    BackgroundColor="#2196F3"
+                    TextColor="White"
+                    Clicked="OnAbrirRelatorio"/>
 
         </VerticalStackLayout>
     </ScrollView>
