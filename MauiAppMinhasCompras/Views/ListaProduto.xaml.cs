@@ -1,112 +1,89 @@
 using MauiAppMinhasCompras.Models;
+using MauiAppMinhasCompras.Data;
 using System.Collections.ObjectModel;
+using System.Linq;
 
-namespace MauiAppMinhasCompras.Views;
-
-public partial class ListaProduto : ContentPage
+namespace MauiAppMinhasCompras.Views
 {
-    ObservableCollection<Produto> lista = new ObservableCollection<Produto>();
-
-    public ListaProduto()
+    public partial class ListaProduto : ContentPage
     {
-        InitializeComponent();
+        private ProdutoRepository _repository;
+        public ObservableCollection<Produto> ListaProdutos { get; set; }
 
-        lst_produtos.ItemsSource = lista;
-    }
-
-    protected async override void OnAppearing()
-    {
-        try
+        public ListaProduto()
         {
-            lista.Clear();
+            InitializeComponent();
 
-            List<Produto> tmp = await App.Db.GetAll();
+            string dbPath = Path.Combine(FileSystem.AppDataDirectory, "produtos.db3");
+            _repository = new ProdutoRepository(dbPath);
 
-            tmp.ForEach(i => lista.Add(i));
+            // Carrega os produtos existentes
+            ListaProdutos = new ObservableCollection<Produto>(_repository.GetProdutos());
+            ProdutosCollectionView.ItemsSource = ListaProdutos;
         }
-        catch (Exception ex)
+
+        // Abrir tela de novo produto
+        private async void OnAbrirNovoProduto(object sender, EventArgs e)
         {
-            await DisplayAlert("Ops", ex.Message, "OK");
-        }
-    }
-
-    private void ToolbarItem_Clicked(object sender, EventArgs e)
-    {
-        try
-        {
-            Navigation.PushAsync(new Views.NovoProduto());
-
-        }
-        catch (Exception ex)
-        {
-            DisplayAlert("Ops", ex.Message, "OK");
-        }
-    }
-
-    private async void txt_search_TextChanged(object sender, TextChangedEventArgs e)
-    {
-        try
-        {
-            string q = e.NewTextValue;
-
-            lista.Clear();
-
-            List<Produto> tmp = await App.Db.Search(q);
-
-            tmp.ForEach(i => lista.Add(i));
-        }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Ops", ex.Message, "OK");
-        }
-    }
-
-    private void ToolbarItem_Clicked_1(object sender, EventArgs e)
-    {
-        double soma = lista.Sum(i => i.Total);
-
-        string msg = $"O total é {soma:C}";
-
-        DisplayAlert("Total dos Produtos", msg, "OK");
-    }
-
-    private async void MenuItem_Clicked(object sender, EventArgs e)
-    {
-        try
-        {
-            MenuItem selecinado = sender as MenuItem;
-
-            Produto p = selecinado.BindingContext as Produto;
-
-            bool confirm = await DisplayAlert(
-                "Tem Certeza?", $"Remover {p.Descricao}?", "Sim", "Não");
-
-            if (confirm)
+            await Navigation.PushAsync(new NovoProduto(_repository, produto =>
             {
-                await App.Db.Delete(p.Id);
-                lista.Remove(p);
+                ListaProdutos.Add(produto);
+            }));
+        }
+
+        // Filtrar produtos por categoria
+        private void OnFiltroCategoriaChanged(object sender, EventArgs e)
+        {
+            string categoriaSelecionada = FiltroCategoriaPicker.SelectedItem?.ToString();
+            if (categoriaSelecionada == "Todos" || string.IsNullOrEmpty(categoriaSelecionada))
+            {
+                ProdutosCollectionView.ItemsSource = ListaProdutos;
+            }
+            else
+            {
+                ProdutosCollectionView.ItemsSource = new ObservableCollection<Produto>(
+                    ListaProdutos.Where(p => p.Categoria == categoriaSelecionada)
+                );
             }
         }
-        catch (Exception ex)
-        {
-            await DisplayAlert("Ops", ex.Message, "OK");
-        }
-    }
 
-    private void lst_produtos_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-    {
-        try
+        // Editar produto selecionado
+        private async void OnEditarProduto(object sender, EventArgs e)
         {
-            Produto p = e.SelectedItem as Produto;
+            var button = sender as Button;
+            var produto = button?.BindingContext as Produto;
+            if (produto == null) return;
 
-            Navigation.PushAsync(new Views.EditarProduto
+            var editPage = new EditarProduto(produto, _repository);
+            await Navigation.PushAsync(editPage);
+
+            // Atualiza a CollectionView ao voltar
+            editPage.Disappearing += (s, args) =>
             {
-                BindingContext = p,
-            });
+                ProdutosCollectionView.ItemsSource = null;
+                ProdutosCollectionView.ItemsSource = ListaProdutos;
+            };
         }
-        catch (Exception ex)
+
+        // Deletar produto selecionado
+        private async void OnDeletarProduto(object sender, EventArgs e)
         {
-            DisplayAlert("Ops", ex.Message, "OK");
+            var button = sender as Button;
+            var produto = button?.BindingContext as Produto;
+            if (produto == null) return;
+
+            bool confirm = await DisplayAlert("Confirmação", $"Deseja deletar {produto.Descricao}?", "Sim", "Não");
+            if (confirm)
+            {
+                _repository.DeleteProduto(produto);
+                ListaProdutos.Remove(produto);
+            }
+        }
+
+        // Abrir página de relatório
+        private async void OnAbrirRelatorio(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new RelatorioPage(ListaProdutos.ToList()));
         }
     }
 }

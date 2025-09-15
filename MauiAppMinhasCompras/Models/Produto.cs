@@ -1,5 +1,4 @@
 ﻿using SQLite;
-using System;
 
 namespace MauiAppMinhasCompras.Models
 {
@@ -16,19 +15,14 @@ namespace MauiAppMinhasCompras.Models
             set
             {
                 if (string.IsNullOrWhiteSpace(value))
-                {
                     throw new Exception("Por favor, preencha a descrição");
-                }
                 _descricao = value;
             }
         }
 
         public double Quantidade { get; set; }
         public double Preco { get; set; }
-
-        // ✅ Novo campo para organizar os produtos
         public string Categoria { get; set; }
-
-        public double Total { get => Quantidade * Preco; }
+        public double Total => Quantidade * Preco;
     }
 }

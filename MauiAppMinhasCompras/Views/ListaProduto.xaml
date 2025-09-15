@@ -1,47 +1,51 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.ListaProduto"
-             Title="Minhas Compras">
+             Title="Lista de Produtos">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Somar" Clicked="ToolbarItem_Clicked_1" />
-        <ToolbarItem Text="Adicionar" Clicked="ToolbarItem_Clicked" />
-    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-    <VerticalStackLayout Padding="10" Spacing="5">
-        <SearchBar x:Name="txt_search" 
-                   Placeholder="Busca de Produtos"
-                   TextChanged="txt_search_TextChanged"/>
+            <!-- Picker de filtro -->
+            <Label Text="Filtrar por Categoria" FontAttributes="Bold"/>
+            <Picker x:Name="FiltroCategoriaPicker"
+                    Title="Selecione a Categoria"
+                    SelectedIndexChanged="OnFiltroCategoriaChanged">
+                <Picker.Items>
+                    <x:String>Todos</x:String>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
 
-        <ListView x:Name="lst_produtos" ItemSelected="lst_produtos_ItemSelected">
-            <ListView.Header>
-                <Grid ColumnDefinitions="50,*,80,60,80">
-                    <Label Grid.Column="0" Text="ID" HorizontalOptions="Start" Margin="5,0"/>
-                    <Label Grid.Column="1" Text="Descrição" HorizontalOptions="Start" Margin="5,0"/>
-                    <Label Grid.Column="2" Text="Preço" HorizontalOptions="Center"/>
-                    <Label Grid.Column="3" Text="Qnt" HorizontalOptions="Center"/>
-                    <Label Grid.Column="4" Text="Total" HorizontalOptions="End" Margin="0,0,5,0"/>
-                </Grid>
-            </ListView.Header>
+            <!-- CollectionView com produtos -->
+            <CollectionView x:Name="ProdutosCollectionView" HeightRequest="400">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame BorderColor="LightGray" Margin="5" Padding="10">
+                            <VerticalStackLayout>
+                                <Label Text="{Binding Descricao}" FontSize="16"/>
+                                <Label Text="{Binding Categoria}" FontSize="14" TextColor="Gray"/>
+                                <Label Text="{Binding Total, StringFormat='Total: {0:C}'}" FontAttributes="Bold"/>
 
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Remover" Clicked="MenuItem_Clicked" />
-                        </ViewCell.ContextActions>
+                                <HorizontalStackLayout Spacing="10" Margin="0,5,0,0">
+                                    <Button Text="Editar" Clicked="OnEditarProduto"/>
+                                    <Button Text="Excluir" Clicked="OnDeletarProduto" BackgroundColor="Red" TextColor="White"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-                        <Grid ColumnDefinitions="50,*,80,60,80" Padding="5">
-                            <Label Grid.Column="0" Text="{Binding Id}" HorizontalOptions="Start"/>
-                            <Label Grid.Column="1" Text="{Binding Descricao}" HorizontalOptions="Start"/>
-                            <Label Grid.Column="2" Text="{Binding Preco, StringFormat='R$ {0:F2}'}" HorizontalOptions="Center"/>
-                            <Label Grid.Column="3" Text="{Binding Quantidade}" HorizontalOptions="Center"/>
-                            <Label Grid.Column="4" Text="{Binding Total, StringFormat='R$ {0:F2}'}" HorizontalOptions="End"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+            <!-- Botões gerais -->
+            <HorizontalStackLayout Spacing="10" Margin="0,10,0,0">
+                <Button Text="Adicionar Produto" Clicked="OnAbrirNovoProduto"/>
+                <Button Text="Relatório" Clicked="OnAbrirRelatorio" BackgroundColor="#2196F3" TextColor="White"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

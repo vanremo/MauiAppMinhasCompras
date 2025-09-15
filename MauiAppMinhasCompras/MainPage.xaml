@@ -1,4 +1,5 @@
-﻿<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.MainPage"
              Title="Minhas Compras">
@@ -11,24 +12,40 @@
                    FontAttributes="Bold"
                    HorizontalOptions="Center"/>
 
-            <Entry x:Name="DescricaoEntry" Placeholder="Descrição do produto"/>
-            <Entry x:Name="QuantidadeEntry" Placeholder="Quantidade" Keyboard="Numeric"/>
-            <Entry x:Name="PrecoEntry" Placeholder="Preço" Keyboard="Numeric"/>
+            <!-- Campo Descrição -->
+            <Entry x:Name="DescricaoEntry"
+                   Placeholder="Descrição do produto"/>
 
-            <Picker x:Name="CategoriaPicker" Title="Selecione a Categoria">
-                <Picker.Items>
-                    <x:String>Alimentos</x:String>
-                    <x:String>Higiene</x:String>
-                    <x:String>Limpeza</x:String>
-                    <x:String>Outros</x:String>
-                </Picker.Items>
-            </Picker>
+            <!-- Campo Quantidade -->
+            <Entry x:Name="QuantidadeEntry"
+                   Placeholder="Quantidade"
+                   Keyboard="Numeric"/>
 
-            <Button Text="Adicionar Produto" Clicked="OnAdicionarProduto"/>
+            <!-- Campo Preço -->
+            <Entry x:Name="PrecoEntry"
+                   Placeholder="Preço"
+                   Keyboard="Numeric"/>
 
-            <Label Text="Produtos cadastrados" FontSize="18" FontAttributes="Bold" Margin="0,20,0,5"/>
+            <!-- Campo Categoria -->
+            <Label Text="Filtrar por Categoria" FontSize="16" FontAttributes="Bold" />
 
-            <CollectionView x:Name="ProdutosCollectionView" HeightRequest="300">
+            <Label Text="Filtrar por Categoria" FontSize="16" FontAttributes="Bold" />
+
+            <Picker x:Name="FiltroCategoriaPicker"
+            Title="Selecione a Categoria"
+            SelectedIndexChanged="OnFiltroCategoriaChanged"/>
+            <!-- Botão salvar -->
+            <Button Text="Adicionar Produto"
+                    Clicked="OnAdicionarProduto"/>
+
+            <!-- Lista de produtos -->
+            <Label Text="Produtos cadastrados"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   Margin="0,20,0,5"/>
+
+            <CollectionView x:Name="ProdutosCollectionView"
+                            HeightRequest="300">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame BorderColor="LightGray" Margin="5" Padding="10">
@@ -42,18 +59,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
 
-            <Label Text="Filtrar por Categoria" FontSize="16" FontAttributes="Bold" />
-
-            <Picker x:Name="FiltroCategoriaPicker" Title="Selecione a Categoria" SelectedIndexChanged="OnFiltroCategoriaChanged">
-                <Picker.Items>
-                    <x:String>Todos</x:String>
-                    <x:String>Alimentos</x:String>
-                    <x:String>Higiene</x:String>
-                    <x:String>Limpeza</x:String>
-                    <x:String>Outros</x:String>
-                </Picker.Items>
-            </Picker>
-
+            <!-- Botão relatório -->
             <Button Text="Relatório por Categoria"
                     BackgroundColor="#2196F3"
                     TextColor="White"

@@ -1,35 +1,46 @@
 using MauiAppMinhasCompras.Models;
+using MauiAppMinhasCompras.Data;
+using System;
 
-namespace MauiAppMinhasCompras.Views;
-
-public partial class EditarProduto : ContentPage
+namespace MauiAppMinhasCompras.Views
 {
-    public EditarProduto()
+    public partial class EditarProduto : ContentPage
     {
-        InitializeComponent();
-    }
+        private Produto _produto;
+        private ProdutoRepository _repository;
 
-    private async void ToolbarItem_Clicked(object sender, EventArgs e)
-    {
-        try
+        public EditarProduto(Produto produto, ProdutoRepository repository)
         {
-            Produto produto_anexado = BindingContext as Produto;
+            InitializeComponent();
 
-            Produto p = new Produto
-            {
-                Id = produto_anexado.Id,
-                Descricao = txt_descricao.Text,
-                Quantidade = Convert.ToDouble(txt_quantidade.Text),
-                Preco = Convert.ToDouble(txt_preco.Text)
-            };
+            _produto = produto;
+            _repository = repository;
 
-            await App.Db.Update(p);
-            await DisplayAlert("Sucesso!", "Registro Atualizado", "OK");
-            await Navigation.PopAsync();
+            // Preenche campos com os valores existentes
+            DescricaoEntry.Text = _produto.Descricao;
+            QuantidadeEntry.Text = _produto.Quantidade.ToString();
+            PrecoEntry.Text = _produto.Preco.ToString();
+            CategoriaPicker.SelectedItem = _produto.Categoria;
         }
-        catch (Exception ex)
+
+        private async void OnSalvarAlteracoes(object sender, EventArgs e)
         {
-            await DisplayAlert("Ops", ex.Message, "OK");
+            try
+            {
+                _produto.Descricao = DescricaoEntry.Text;
+                _produto.Quantidade = double.Parse(QuantidadeEntry.Text);
+                _produto.Preco = double.Parse(PrecoEntry.Text);
+                _produto.Categoria = CategoriaPicker.SelectedItem?.ToString() ?? "Outros";
+
+                _repository.SaveProduto(_produto);
+
+                await DisplayAlert("Sucesso", "Produto atualizado!", "OK");
+                await Navigation.PopAsync();
+            }
+            catch (Exception ex)
+            {
+                await DisplayAlert("Erro", ex.Message, "OK");
+            }
         }
     }
 }

@@ -2,20 +2,34 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MauiAppMinhasCompras.Views.EditarProduto"
-             Title="{Binding Descricao}">
+             Title="Editar Produto">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
-    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="10">
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <Label Text="Descrição do Produto:" />
-        <Entry x:Name="txt_descricao" Text="{Binding Descricao}" />
+            <Label Text="Editar Produto" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-        <Label Text="Quantidade:" />
-        <Entry x:Name="txt_quantidade" Text="{Binding Quantidade}" Keyboard="Numeric" />
+            <!-- Campo Descrição -->
+            <Entry x:Name="DescricaoEntry" Placeholder="Descrição"/>
 
-        <Label Text="Preço Unitário:" />
-        <Entry x:Name="txt_preco" Text="{Binding Preco}" Keyboard="Numeric" />
-    </VerticalStackLayout>
+            <!-- Campo Quantidade -->
+            <Entry x:Name="QuantidadeEntry" Placeholder="Quantidade" Keyboard="Numeric"/>
+
+            <!-- Campo Preço -->
+            <Entry x:Name="PrecoEntry" Placeholder="Preço" Keyboard="Numeric"/>
+
+            <!-- Campo Categoria -->
+            <Picker x:Name="CategoriaPicker" Title="Selecione a Categoria">
+                <Picker.Items>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Botão Salvar -->
+            <Button Text="Salvar Alterações" Clicked="OnSalvarAlteracoes"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

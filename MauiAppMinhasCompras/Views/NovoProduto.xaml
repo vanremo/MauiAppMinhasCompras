@@ -4,18 +4,32 @@
              x:Class="MauiAppMinhasCompras.Views.NovoProduto"
              Title="Novo Produto">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Salvar" Clicked="ToolbarItem_Clicked" />
-    </ContentPage.ToolbarItems>
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
 
-    <VerticalStackLayout Spacing="10" Padding="10">
-        <Label Text="Descrição do Produto:" />
-        <Entry x:Name="txt_descricao" />
+            <Label Text="Novo Produto" FontSize="20" FontAttributes="Bold" HorizontalOptions="Center"/>
 
-        <Label Text="Quantidade:" />
-        <Entry x:Name="txt_quantidade" Keyboard="Numeric" />
+            <!-- Campo Descrição -->
+            <Entry x:Name="DescricaoEntry" Placeholder="Descrição do produto"/>
 
-        <Label Text="Preço Unitário:" />
-        <Entry x:Name="txt_preco" Keyboard="Numeric" />
-    </VerticalStackLayout>
+            <!-- Campo Quantidade -->
+            <Entry x:Name="QuantidadeEntry" Placeholder="Quantidade" Keyboard="Numeric"/>
+
+            <!-- Campo Preço -->
+            <Entry x:Name="PrecoEntry" Placeholder="Preço" Keyboard="Numeric"/>
+
+            <!-- Campo Categoria -->
+            <Picker x:Name="CategoriaPicker" Title="Selecione a Categoria">
+                <Picker.Items>
+                    <x:String>Alimentos</x:String>
+                    <x:String>Higiene</x:String>
+                    <x:String>Limpeza</x:String>
+                    <x:String>Outros</x:String>
+                </Picker.Items>
+            </Picker>
+
+            <!-- Botão Salvar -->
+            <Button Text="Adicionar Produto" Clicked="OnAdicionarProduto"/>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>
